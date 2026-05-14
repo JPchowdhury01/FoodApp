@@ -38,13 +38,7 @@ export function Login() {
           </button>
         </form>
 
-        <div className="auth-demo">
-          <p>Demo credentials:</p>
-          <div className="demo-creds">
-            <div><strong>User:</strong> john@example.com / password123</div>
-            <div><strong>Admin:</strong> admin@foodapp.com / admin123</div>
-          </div>
-        </div>
+        
 
         <p className="auth-switch">
           Don't have an account? <Link to="/register">Sign up for free</Link>
