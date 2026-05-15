@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <span className="footer-logo">🍕 FoodApp</span>
+          <span className="footer-logo">🍕 Servd</span>
           <p>Delivering happiness to your door, one meal at a time.</p>
         </div>
         <div className="footer-links">
@@ -31,7 +31,10 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} Servd. Built with ❤️ in Bengalore and Bengal.</p>
+        <p>
+          © {new Date().getFullYear()} Servd. Built with ❤️ in Bengalore and
+          Bengal.
+        </p>
       </div>
     </footer>
   );
