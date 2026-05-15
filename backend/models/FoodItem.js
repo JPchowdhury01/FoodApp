@@ -16,7 +16,7 @@ const foodItemSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Category is required'],
-    enum: ['veg', 'non-veg', 'vegan', 'fast-food', 'dessert', 'beverages', 'starters', 'main-course', 'breads', 'rice', 'noodles', 'pizza', 'burgers', 'seafood']
+    enum: ['Veg', 'Non-veg', 'Vegan', 'Fast-food', 'Desserts', 'Beverages','Breads', 'Rice', 'Noodles', 'Pizza', 'Burgers', 'Seafood','Sushi','Soup','Biryani','Sides','Tacos','Quesadilla','Bowls','Curry','Shawarma','Kebab','Pasta','Starters','Main Course','Cakes','BBQ','Salads','Momos','Steak','Chai','Snacks','Wafffles']
   },
   restaurantId: {
     type: mongoose.Schema.Types.ObjectId,
