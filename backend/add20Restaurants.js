@@ -1,0 +1,387 @@
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const Restaurant = require("./models/Restaurant");
+
+const restaurantsData = [
+  {
+    name: "Spice Garden",
+    description: "Authentic Indian cuisine with rich flavors",
+    location: {
+      address: "12 MG Road",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560001",
+    },
+    coordinates: { lat: 12.9716, lng: 77.6412 },
+    cuisine: ["Indian", "North Indian"],
+    deliveryTime: "25-35 mins",
+    deliveryFee: 30,
+    minimumOrder: 150,
+    image: "https://images.unsplash.com/photo-1596040550128-0c1a90b24e15?w=400",
+    tags: ["popular", "bestseller"],
+  },
+  {
+    name: "Burger Barn",
+    description: "Juicy burgers and crispy fries",
+    location: {
+      address: "45 Koramangala",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560034",
+    },
+    coordinates: { lat: 12.9352, lng: 77.6245 },
+    cuisine: ["Fast Food", "American"],
+    deliveryTime: "20-30 mins",
+    deliveryFee: 20,
+    minimumOrder: 100,
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+    tags: ["fast-food", "burgers"],
+  },
+  {
+    name: "Pizza Palace",
+    description: "Authentic Italian pizzas baked to perfection",
+    location: {
+      address: "78 Indiranagar",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560038",
+    },
+    coordinates: { lat: 12.9716, lng: 77.6412 },
+    cuisine: ["Italian", "Pizza"],
+    deliveryTime: "30-40 mins",
+    deliveryFee: 25,
+    minimumOrder: 200,
+    image: "https://images.unsplash.com/photo-1571407-918c66015325?w=400",
+    tags: ["pizza", "trending"],
+  },
+  {
+    name: "Sushi Master",
+    description: "Fresh sushi and Japanese delicacies",
+    location: {
+      address: "56 Whitefield",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560066",
+    },
+    coordinates: { lat: 12.9698, lng: 77.7499 },
+    cuisine: ["Japanese", "Sushi"],
+    deliveryTime: "35-45 mins",
+    deliveryFee: 50,
+    minimumOrder: 300,
+    image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400",
+    tags: ["premium", "japanese"],
+  },
+  {
+    name: "Biryani Express",
+    description: "Hyderabadi and Lucknowi biryani specialties",
+    location: {
+      address: "23 JP Nagar",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560078",
+    },
+    coordinates: { lat: 12.925, lng: 77.5965 },
+    cuisine: ["Biryani", "Hyderabadi"],
+    deliveryTime: "30-40 mins",
+    deliveryFee: 35,
+    minimumOrder: 200,
+    image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a104?w=400",
+    tags: ["biryani", "bestseller"],
+  },
+  {
+    name: "Taco Fiesta",
+    description: "Mexican street food and authentic tacos",
+    location: {
+      address: "89 Ulsoor",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560042",
+    },
+    coordinates: { lat: 12.9789, lng: 77.6315 },
+    cuisine: ["Mexican", "Street Food"],
+    deliveryTime: "20-30 mins",
+    deliveryFee: 25,
+    minimumOrder: 120,
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400",
+    tags: ["mexican", "street-food"],
+  },
+  {
+    name: "Vegan Paradise",
+    description: "100% vegan and plant-based meals",
+    location: {
+      address: "34 Malleswaram",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560003",
+    },
+    coordinates: { lat: 13.0001, lng: 77.5714 },
+    cuisine: ["Vegan", "Healthy"],
+    deliveryTime: "25-35 mins",
+    deliveryFee: 30,
+    minimumOrder: 150,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400",
+    tags: ["vegan", "healthy"],
+  },
+  {
+    name: "Thai Orchid",
+    description: "Authentic Thai cuisine with aromatic spices",
+    location: {
+      address: "67 Silk Board",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560034",
+    },
+    coordinates: { lat: 12.942, lng: 77.6245 },
+    cuisine: ["Thai", "Asian"],
+    deliveryTime: "30-40 mins",
+    deliveryFee: 40,
+    minimumOrder: 180,
+    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1ab012?w=400",
+    tags: ["thai", "asian-cuisine"],
+  },
+  {
+    name: "Kebab House",
+    description: "Middle Eastern kebabs and shawarma",
+    location: {
+      address: "12 Marathahalli",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560037",
+    },
+    coordinates: { lat: 12.9689, lng: 77.7499 },
+    cuisine: ["Middle Eastern", "Kebab"],
+    deliveryTime: "20-30 mins",
+    deliveryFee: 25,
+    minimumOrder: 120,
+    image: "https://images.unsplash.com/photo-1604888540268-d9b0e2e98f27?w=400",
+    tags: ["kebab", "street-food"],
+  },
+  {
+    name: "Pasta Grill",
+    description: "Fresh pasta and Italian mains",
+    location: {
+      address: "45 Yelahanka",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560064",
+    },
+    coordinates: { lat: 13.1025, lng: 77.5954 },
+    cuisine: ["Italian", "Pasta"],
+    deliveryTime: "28-38 mins",
+    deliveryFee: 30,
+    minimumOrder: 160,
+    image: "https://images.unsplash.com/photo-1612874742237-415c69f18133?w=400",
+    tags: ["italian", "pasta"],
+  },
+  {
+    name: "Dragon Wok",
+    description: "Authentic Chinese cuisine and dim sum",
+    location: {
+      address: "78 HSR Layout",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560102",
+    },
+    coordinates: { lat: 12.925, lng: 77.6367 },
+    cuisine: ["Chinese", "Asian"],
+    deliveryTime: "25-35 mins",
+    deliveryFee: 35,
+    minimumOrder: 170,
+    image: "https://images.unsplash.com/photo-1585518419758-d2fb72f38208?w=400",
+    tags: ["chinese", "dim-sum"],
+  },
+  {
+    name: "Choco Bliss",
+    description: "Chocolates, desserts, and sweet treats",
+    location: {
+      address: "23 Frazer Town",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560005",
+    },
+    coordinates: { lat: 12.9689, lng: 77.6315 },
+    cuisine: ["Desserts", "Cafe"],
+    deliveryTime: "15-25 mins",
+    deliveryFee: 20,
+    minimumOrder: 80,
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400",
+    tags: ["desserts", "cafe"],
+  },
+  {
+    name: "Tandoori Nights",
+    description: "Traditional tandoori dishes and breads",
+    location: {
+      address: "56 Vijayanagar",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560040",
+    },
+    coordinates: { lat: 12.9689, lng: 77.5789 },
+    cuisine: ["Indian", "Tandoori"],
+    deliveryTime: "30-40 mins",
+    deliveryFee: 35,
+    minimumOrder: 180,
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400",
+    tags: ["tandoori", "indian"],
+  },
+  {
+    name: "BBQ Smokehouse",
+    description: "Smoked meats and BBQ specialties",
+    location: {
+      address: "89 Domlur",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560071",
+    },
+    coordinates: { lat: 12.9691, lng: 77.6245 },
+    cuisine: ["BBQ", "American"],
+    deliveryTime: "35-45 mins",
+    deliveryFee: 45,
+    minimumOrder: 250,
+    image: "https://images.unsplash.com/photo-1555939594-58d7cb561849?w=400",
+    tags: ["bbq", "smokehouse"],
+  },
+  {
+    name: "Fusion Kitchen",
+    description: "Modern fusion cuisine blending cultures",
+    location: {
+      address: "34 Jayanagar",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560041",
+    },
+    coordinates: { lat: 12.9352, lng: 77.6245 },
+    cuisine: ["Fusion", "International"],
+    deliveryTime: "32-42 mins",
+    deliveryFee: 40,
+    minimumOrder: 200,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
+    tags: ["fusion", "trending"],
+  },
+  {
+    name: "Soup Station",
+    description: "Fresh soups, salads, and healthy bowls",
+    location: {
+      address: "12 Indira Nagar",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560038",
+    },
+    coordinates: { lat: 12.9716, lng: 77.6412 },
+    cuisine: ["Healthy", "Salads"],
+    deliveryTime: "20-30 mins",
+    deliveryFee: 25,
+    minimumOrder: 110,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
+    tags: ["healthy", "salads"],
+  },
+  {
+    name: "Momos Corner",
+    description: "Tibetan momos and pan-Asian dumplings",
+    location: {
+      address: "45 Residency Road",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560025",
+    },
+    coordinates: { lat: 12.9789, lng: 77.5789 },
+    cuisine: ["Tibetan", "Momos"],
+    deliveryTime: "18-28 mins",
+    deliveryFee: 20,
+    minimumOrder: 100,
+    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400",
+    tags: ["momos", "street-food"],
+  },
+  {
+    name: "Grilled Perfection",
+    description: "Grilled steaks and premium meat cuts",
+    location: {
+      address: "78 Richmond Road",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560025",
+    },
+    coordinates: { lat: 12.9791, lng: 77.5698 },
+    cuisine: ["Steakhouse", "Premium"],
+    deliveryTime: "40-50 mins",
+    deliveryFee: 60,
+    minimumOrder: 350,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
+    tags: ["steakhouse", "premium"],
+  },
+  {
+    name: "Chai Express",
+    description: "Traditional Indian chai and snacks",
+    location: {
+      address: "23 MG Road",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560001",
+    },
+    coordinates: { lat: 12.9716, lng: 77.6412 },
+    cuisine: ["Chai", "Snacks"],
+    deliveryTime: "15-20 mins",
+    deliveryFee: 15,
+    minimumOrder: 50,
+    image: "https://images.unsplash.com/photo-1597318963147-a1b1b31a8d9e?w=400",
+    tags: ["chai", "snacks"],
+  },
+  {
+    name: "Waffle & Crepe",
+    description: "Belgian waffles and French crepes",
+    location: {
+      address: "56 Banjara Hills",
+      city: "Bangalore",
+      state: "Karnataka",
+      zipCode: "560034",
+    },
+    coordinates: { lat: 12.942, lng: 77.6245 },
+    cuisine: ["Desserts", "Cafe"],
+    deliveryTime: "20-30 mins",
+    deliveryFee: 25,
+    minimumOrder: 100,
+    image: "https://images.unsplash.com/photo-1563805042-7684c019e0ac?w=400",
+    tags: ["waffles", "crepes", "desserts"],
+  },
+];
+
+const addRestaurants = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("✅ Connected to MongoDB");
+
+    const restaurants = await Restaurant.create(
+      restaurantsData.map((data) => ({
+        ...data,
+        rating: (Math.random() * 1 + 4).toFixed(1),
+        totalReviews: Math.floor(Math.random() * 300),
+        isOpen: Math.random() > 0.2,
+        isActive: true,
+        tags: data.tags,
+        openingHours: {
+          open: "09:00",
+          close: "23:00",
+        },
+      })),
+    );
+
+    console.log(`✅ ${restaurants.length} restaurants added successfully!`);
+    restaurants.forEach((rest, idx) => {
+      console.log(
+        `  ${idx + 1}. ${rest.name} (${rest.location.city}) - ID: ${rest._id}`,
+      );
+    });
+
+    await mongoose.connection.close();
+    console.log("✅ Database connection closed");
+    process.exit(0);
+  } catch (err) {
+    console.error("❌ Error:", err.message);
+    await mongoose.connection.close();
+    process.exit(1);
+  }
+};
+
+addRestaurants();

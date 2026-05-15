@@ -28,31 +28,55 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="container navbar-inner">
         <Link to="/" className="navbar-brand">
           <span className="brand-icon">🍕</span>
-          <span className="brand-name">FoodApp</span>
+          <span className="brand-name">Servd</span>
         </Link>
 
         <div className="navbar-links">
-          <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Home</Link>
-          <Link to="/restaurants" className={`nav-link ${isActive('/restaurants') ? 'active' : ''}`}>Restaurants</Link>
-          {isAdmin && <Link to="/admin" className="nav-link admin-link">Admin</Link>}
+          <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
+            Home
+          </Link>
+          <Link
+            to="/restaurants"
+            className={`nav-link ${isActive("/restaurants") ? "active" : ""}`}
+          >
+            Restaurants
+          </Link>
+          {isAdmin && (
+            <Link to="/admin" className="nav-link admin-link">
+              Admin
+            </Link>
+          )}
         </div>
 
         <div className="navbar-actions">
           {user ? (
             <>
               <Link to="/cart" className="cart-btn">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
-                {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+                {totalItems > 0 && (
+                  <span className="cart-badge">{totalItems}</span>
+                )}
               </Link>
               <div className="user-menu" ref={menuRef}>
-                <button className="user-avatar" onClick={() => setMenuOpen(!menuOpen)}>
+                <button
+                  className="user-avatar"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
                   {user.name.charAt(0).toUpperCase()}
                 </button>
                 {menuOpen && (
@@ -61,18 +85,37 @@ export default function Navbar() {
                       <span className="dropdown-name">{user.name}</span>
                       <span className="dropdown-email">{user.email}</span>
                     </div>
-                    <Link to="/orders" className="dropdown-item" onClick={() => setMenuOpen(false)}>
+                    <Link
+                      to="/orders"
+                      className="dropdown-item"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       📦 My Orders
                     </Link>
-                    <Link to="/profile" className="dropdown-item" onClick={() => setMenuOpen(false)}>
+                    <Link
+                      to="/profile"
+                      className="dropdown-item"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       👤 Profile
                     </Link>
                     {isAdmin && (
-                      <Link to="/admin" className="dropdown-item" onClick={() => setMenuOpen(false)}>
+                      <Link
+                        to="/admin"
+                        className="dropdown-item"
+                        onClick={() => setMenuOpen(false)}
+                      >
                         ⚙️ Admin Panel
                       </Link>
                     )}
-                    <button className="dropdown-item logout" onClick={() => { logout(); setMenuOpen(false); navigate('/'); }}>
+                    <button
+                      className="dropdown-item logout"
+                      onClick={() => {
+                        logout();
+                        setMenuOpen(false);
+                        navigate("/");
+                      }}
+                    >
                       🚪 Logout
                     </button>
                   </div>
@@ -81,8 +124,12 @@ export default function Navbar() {
             </>
           ) : (
             <div className="auth-btns">
-              <Link to="/login" className="btn btn-ghost btn-sm">Login</Link>
-              <Link to="/register" className="btn btn-primary btn-sm">Sign Up</Link>
+              <Link to="/login" className="btn btn-ghost btn-sm">
+                Login
+              </Link>
+              <Link to="/register" className="btn btn-primary btn-sm">
+                Sign Up
+              </Link>
             </div>
           )}
         </div>

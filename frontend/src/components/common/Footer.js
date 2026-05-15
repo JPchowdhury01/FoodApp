@@ -31,7 +31,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} FoodApp. Built with ❤️ using the MERN Stack.</p>
+        <p>© {new Date().getFullYear()} Servd. Built with ❤️ in Bengalore and Bengal.</p>
       </div>
     </footer>
   );
