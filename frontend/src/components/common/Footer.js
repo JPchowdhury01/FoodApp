@@ -32,7 +32,7 @@ export default function Footer() {
       </div>
       <div className="footer-bottom">
         <p>
-          © {new Date().getFullYear()} Servd. Built with ❤️ in Bengalore and
+          © {new Date().getFullYear()} Servd. Built by Jyoti Paul Chowdhury.❤️ from
           Bengal.
         </p>
       </div>
